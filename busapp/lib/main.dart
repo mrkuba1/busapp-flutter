@@ -1,10 +1,23 @@
+import 'package:busapp/data/core/bus_client.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  //runApp(const MyApp());
-  print("test");
-  print("test2");
-  print("test3");
+void main() async {
+  const String name = 'Marszałkowska';
+  final busstopsinfo = await BusClient().getBusstopsInfo();
+  var busstopinfolist = busstopsinfo.getBusstopsInfoByName(name);
+  print(busstopinfolist);
+  var busstopinfo = busstopinfolist[0];
+  print(busstopinfo);
+  // var busstoplines = await BusClient().getBusstopLines("7001", "01");
+
+  var busstoplines =
+      await BusClient().getBusstopLines(busstopinfo.id, busstopinfo.smallid);
+  print(busstoplines);
+  var busroutes = await BusClient()
+      .getBusRoutes(busstopinfo.id, busstopinfo.smallid, '514');
+  print(busroutes);
+
+  // runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
